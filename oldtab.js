@@ -20,6 +20,7 @@ function showAllSortedTabs()
     let q = browser.tabs.query({});
 
     q.then( (tabs) => {
+	/*
 	let tmp = [];
         for(let t of tabs) {
 	    tmp.push({ time: t.lastAccessed, title: t.title,
@@ -28,10 +29,10 @@ function showAllSortedTabs()
 		       daysAgo: daysAgo(new Date(t.lastAccessed))
 		     });	    
 	}
-
-	tmp.sort((a, b) => a.time > b.time);
-    
-	showTabInfo(tmp)
+*/
+	tabs.sort((a, b) => a.lastAccessed > b.lastAccessed);
+	
+	showTabInfo(tabs)
     });
 }
 
@@ -43,7 +44,7 @@ function showTabInfo(obj)
     let tbl = document.getElementById('OldTabsTable');
     let now = new Date();
 
-    let maxNumDays = numDaysAgo(new Date(obj[0].time));
+    let maxNumDays = numDaysAgo(new Date(obj[0].lastAccessed));
     
     obj.forEach( t => {
 	let tr = document.createElement("tr");
@@ -68,13 +69,12 @@ function showTabInfo(obj)
 
 
 	td = document.createElement("td")
-	td.innerHTML = t.daysAgo;
-	let numDays = numDaysAgo(new Date(t.time));
-//	alert("color " + "  " + numDays + " " + maxNumDays + " " + getDaysAgoColor(numDays/maxNumDays));
+	let numDays = numDaysAgo(new Date(t.lastAccessed));
+	td.innerHTML = numDays;
 	td.style.color = getDaysAgoColor(numDays/maxNumDays); // "red"
 	tr.appendChild(td);	
 	
-	let date = new Date(t.time);
+	let date = new Date(t.lastAccessed);
 	td = document.createElement("td")
 	td.innerHTML = formatDate(date); // date.toLocaleString();
 	tr.appendChild(td);
