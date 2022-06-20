@@ -8,4 +8,12 @@ td {
 
 td:nth-child(2) {
     text-align: left;
+    text-decoration: underline blue 2px;
 }
+
+td:nth-child(5) {
+    text-align: left;
+}
+
+
+
