@@ -1,8 +1,8 @@
 var leastRecent = false; // true;
 var sortVar = 'lastAccessed';
 
-
 var showHost = true;
+
 
 document.getElementById('refresh').addEventListener("click", function() { refresh(); } );
 document.getElementById('delete').addEventListener("click", function() { deleteSelected(); } );
@@ -230,35 +230,19 @@ function getDaysAgoColor(ratio)
 
 
 
-//
-
 function groupSelected()
 {
-    let p = browser.windows.create({url: "about:blank"});
-    p.then(function(win) {
-	//XXX remove the first tab that was created automatically for this new window.
-	
-	console.log('Created new window ' + win + " " + win.type);
-
-	var tids = Object.keys(selected);
-	for(i =0; i < tids.length; i++) {
+    let tids = Object.keys(selected);
+    
+    if(tids.length == 0)
+	return(false);
+    
+    for(let i = 0; i < tids.length ; i++) {
 	    tids[i] = parseInt(tids[i]);
-	}
-
-
-	setTimeout(() => {
-	    alert("moving " + tids);
-	    var t = browser.tabs.getCurrent();
-	    browser.scripting.executeScript({target: {tabId: t.id}, func: () => document.body.innerHTML = JSON.stringify(tids)});
-
-	// works sometimes -	    
-	    chrome.tabs.move( tids, {windowId: win.id, index: 0}).then(function(tab) { alert("moved " + tab.id);},
-							           function(err) { alert("error moving " + err);});
-
-	}, 450);
-    },  (e) =>  alert("Failed to create window"));
+    }
+    
+    browser.runtime.sendMessage({action: "newWindow", tabs: JSON.stringify(tids)});
 }
-
 
 
 
