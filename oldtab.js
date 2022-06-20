@@ -15,6 +15,8 @@ document.getElementById('sortBy').addEventListener("click", function(ev) {
     refresh();
 });
 
+var originalHostStyle = document.getElementById('OldTabsTable').children[0].children[0].children[4].style;
+
 function refresh()
 {
     let tbl = document.getElementById('OldTabsTable');
@@ -22,6 +24,14 @@ function refresh()
     // have to go in reverse or kids shrinks!
     for(let i = kids.length - 1; i > 0; i--)
 	tbl.removeChild(kids[i]);
+
+
+    // https://www.w3schools.com/jsref/prop_style_display.asp
+    let host_th = tbl.children[0].children[0].children[4];
+    if(showHost)
+	host_th.style = originalHostStyle;
+    else
+	host_th.style.display = "none";
 
     console.log("num children in table now " + kids.length);    
     showAllSortedTabs();

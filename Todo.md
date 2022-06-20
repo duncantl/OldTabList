@@ -19,11 +19,11 @@
    + figure out if it was yesterday
 
 + √ add domain
-   + as a column?
-   + tooltip
+   + √ as a column?
+   + X tooltip
    + √ make this optional
-      + remove the column
-	  + add it back when showHost becomes true
+      + √ remove the column
+	  + √ add it back when showHost becomes true
    
 + allow user to 
   + √ show URLs
