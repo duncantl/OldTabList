@@ -1,4 +1,6 @@
 var leastRecent = false; // true;
+var sortVar = 'lastAccessed';
+
 
 var showHost = true;
 
@@ -8,6 +10,10 @@ document.getElementById('group').addEventListener("click", function() { groupSel
 
 document.getElementById('toggleHost').addEventListener("click", function() { showHost = !showHost; refresh(); } );
 document.getElementById('reverseOrder').addEventListener("click", function() { leastRecent = !leastRecent; refresh(); } );
+document.getElementById('sortBy').addEventListener("click", function(ev) {
+    sortVar = ev.target.value;
+    refresh();
+});
 
 function refresh()
 {
@@ -38,8 +44,8 @@ function showAllSortedTabs()
 		     });	    
 	}
 
-	tmp.sort(leastRecent ? (a, b) => a.lastAccessed > b.lastAccessed :
-		               (a, b) => a.lastAccessed <= b.lastAccessed);
+	tmp.sort(leastRecent ? (a, b) => a[sortVar] > b[sortVar] :
+		               (a, b) => a[sortVar] <= b[sortVar]);
 	showTabInfo(tmp);
     });
 }
@@ -160,7 +166,6 @@ function deleteSelected()
     for(let i = 0; i < tids.length; i++) {
 	tids[i] = parseInt(tids[i]);
     }
-//    alert(Object.keys(selected).length + " tabs selected: " + tids);
 
     browser.tabs.remove(tids).then(cleanDeleted, () => null);
 }
@@ -170,10 +175,8 @@ function cleanDeleted()
     let tids = Object.keys(selected);
     let tbl = document.getElementById('OldTabsTable');
 
-    // alert("removing rows from table " + JSON.stringify(selected) + " row " + selected[tids[0]]);
     
     for(let i = 0; i < tids.length; i++) {
-	// alert("removing " + tbl.children[ selected[ tids[i] ] ].innerHTML);
 	tbl.removeChild(tbl.children[ selected[ tids[i] ] ]);  // 
 	//XXX remove from TabInfo and from selected
     }
