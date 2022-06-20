@@ -1,4 +1,4 @@
-var leastRecent = false; // true;
+var leastRecent = true; // false; // true;
 var sortVar = 'lastAccessed';
 
 var showHost = true;
@@ -74,11 +74,23 @@ function showTabInfo(obj)
     let i = leastRecent ? 0 : obj.length-1;
     let maxNumDays = numDaysAgo(new Date(obj[i].lastAccessed));
 
+    const fragment = new DocumentFragment();
+
     let ctr = 1;
+    let winId = -1;
+    let bgColors = ["white", "lightgrey"];
+    let bgIndex = 0;
     obj.forEach( t => {
+
+	if(t.windowId != winId) {
+	    winId = t.windowId;
+	    bgIndex = (bgIndex == 0) ? 1 : 0;
+	}
+	
 	let tr = document.createElement("tr");
 	tr.rowNum = ctr++;
 	tr.tabId = t.id;
+
 
 	let td = document.createElement("td");
 	let b = document.createElement("input");
@@ -88,18 +100,20 @@ function showTabInfo(obj)
 	tr.appendChild(td);
 	
 	
-	
 	td = document.createElement("td");
+	if(sortVar == 'windowId') {
+	    td.style.background =  bgColors[bgIndex];
+	}
+	
 	let a = document.createElement("a");
 
-	a.innerHTML = "<img src=" + t.favIconUrl + " width=16px height=16px>" + t.title.substring(0, 45) ;
+	a.innerHTML = " <img src=" + t.favIconUrl + " width=16px height=16px>" + t.title.substring(0, 45)  ;
 	let id = t.id;
 	a.setAttribute("tabId",  t.id);
 	a.addEventListener('click', function(e) {     showTab({id: t.id, windowId: t.windowId}); });
 	a.setAttribute("title",  t.url);	
 	td.appendChild(a);
 	tr.appendChild(td);
-
 
 	td = document.createElement("td")
 	let numDays = numDaysAgo(new Date(t.lastAccessed));
@@ -121,9 +135,10 @@ function showTabInfo(obj)
 	}
 	
 
-	tbl.appendChild(tr);
+	fragment.appendChild(tr);
     });
-    
+
+    tbl.appendChild(fragment);
 }
 
 
