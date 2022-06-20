@@ -6,6 +6,12 @@
     <body>
     
 	<h2>Old Tabs</h2>
+
+	<div style="float:right;">
+	    <input type="checkbox" id="toggleHost">show host</input>
+	    <input type="checkbox" id="reverseOrder">reverse order</input>	    
+	</div>
+	
 	<p>
          From earliest to most recently accessed.
         </p>
@@ -25,7 +31,8 @@
 
 	
 	<table id="OldTabsTable" border=1>
-	    <tr><th>Selected</th><th>Tab Title</th><th>Number of days <br/>since last access</th><th>Last accessed</th></tr>
+	    <tr><th>Selected</th><th>Tab Title</th><th>Number of days <br/>since last access</th><th>Last accessed</th>
+	        <th>Host</th></tr>
 	</table>
 
 	<script src="oldtab.js"></script>
