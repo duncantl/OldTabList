@@ -45,6 +45,7 @@ function showAllSortedTabs()
     q.then( (tabs) => {
 
 	let tmp = [];
+/*	
         for(let t of tabs) {
 	    tmp.push({ time: t.lastAccessed, title: t.title,
 		       url: t.url, index: t.index, id: t.id,
@@ -54,7 +55,8 @@ function showAllSortedTabs()
 		       favIconUrl: t.favIconUrl
 		     });	    
 	}
-
+*/
+	tmp = tabs;
 	tmp.sort(leastRecent ? (a, b) => a[sortVar] > b[sortVar] :
 		               (a, b) => a[sortVar] <= b[sortVar]);
 	showTabInfo(tmp);
