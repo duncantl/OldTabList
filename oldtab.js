@@ -50,7 +50,8 @@ function showAllSortedTabs()
 		       url: t.url, index: t.index, id: t.id,
 		       windowId:  t.windowId,
 		       daysAgo: daysAgo(new Date(t.lastAccessed)),
-		       lastAccessed: t.lastAccessed
+		       lastAccessed: t.lastAccessed,
+		       favIconUrl: t.favIconUrl
 		     });	    
 	}
 
@@ -88,7 +89,8 @@ function showTabInfo(obj)
 	
 	td = document.createElement("td");
 	let a = document.createElement("a");
-	a.innerHTML = t.title.substring(0, 45);
+
+	a.innerHTML = "<img src=" + t.favIconUrl + " width=16px height=16px>" + t.title.substring(0, 45) ;
 	let id = t.id;
 	a.setAttribute("tabId",  t.id);
 	a.addEventListener('click', function(e) {     showTab({id: t.id, windowId: t.windowId}); });
@@ -157,7 +159,6 @@ var selected = {};
  The tabId and row number are attributes in the <tr> elements of the table.
  The row numbers start at 1 so can index directly to the children of the <table>.
 */
-
 
 function select(tab, box)
 {
