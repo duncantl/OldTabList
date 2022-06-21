@@ -259,8 +259,14 @@ function groupSelected()
 	    tids[i] = parseInt(tids[i]);
     }
     
-    browser.runtime.sendMessage({action: "newWindow", tabs: JSON.stringify(tids)});
+    browser.runtime.sendMessage({action: "newWindow", tabs: tids, preface: ""});
 }
+
+
+// tabsByDomain();
+document.getElementById("btn.groupByDomain").addEventListener("click",  function() { groupByDomain(3); });
+
+
 
 
 
